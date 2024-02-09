@@ -82,4 +82,6 @@ jobs:
           draft: 'true'
           tag: ${{ inputs.release-tag }}
           updateOnlyUnreleased: 'true'
+          generateReleaseNotes: 'true'
+          artifacts: '/home/runner/work/druid-exporter/druid-exporter/prometheus-druid-exporter-${{ inputs.release-tag }}.tgz'
 
