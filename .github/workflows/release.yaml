@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
-      contents: read
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -68,12 +68,18 @@ jobs:
       - name: Push chart
         uses: appany/helm-oci-chart-releaser@v0.4.1
         with:
-          name: prometheus-druid-exporter
+          name: chart
           repository: ${{ github.repository }}
-          tag: ${{ inputs.release-tag }}-chart
+          tag: ${{ inputs.release-tag }}
           path: helm
           registry: ghcr.io
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
           update_dependencies: 'true'
+      - uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: 'true'
+          draft: 'true'
+          tag: ${{ inputs.release-tag }}
+          updateOnlyUnreleased: 'true'
 
