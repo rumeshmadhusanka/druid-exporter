@@ -6,12 +6,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Test docker-compose file config
         run: docker-compose -f ./compose/docker-compose.yml config
 
       - name: Test docker-compose run action
-        uses: isbang/compose-action@v0.1.1
+        uses: isbang/compose-action@v1.5.1
         with:
           compose-file: ./compose/docker-compose.yml
