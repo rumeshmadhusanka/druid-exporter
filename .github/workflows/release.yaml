@@ -70,7 +70,7 @@ jobs:
         with:
           name: prometheus-druid-exporter
           repository: ${{ github.repository }}
-          tag: chart-${{ inputs.release-tag }}
+          tag: ${{ inputs.release-tag }}-chart
           path: helm
           registry: ghcr.io
           registry_username: ${{ github.actor }}
