@@ -68,7 +68,7 @@ jobs:
       - name: Push chart
         uses: appany/helm-oci-chart-releaser@v0.4.1
         with:
-          name: chart
+          name: prometheus-druid-exporter
           repository: ${{ github.repository }}
           tag: ${{ inputs.release-tag }}
           path: helm
