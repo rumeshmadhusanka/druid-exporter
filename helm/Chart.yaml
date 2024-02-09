@@ -4,16 +4,9 @@ appVersion: "0.11.1"
 description: Druid exporter to monitor druid metrics with Prometheus
 name: prometheus-druid-exporter
 version: 0.11.1
-home: https://github.com/opstree/druid-exporter
-maintainers:
-- email: abhishekbhardwaj510@gmail.com
-  name: iamabhishek-dubey
-- email: sandeep@opstree.com
-  name: sandy724
-- email: stephan.stiefel@hawk.ai
-  name: Stephan3555
+home: https://github.com/rumeshmadhusanka/druid-exporter
 sources:
-  - https://github.com/opstree/druid-exporter/helm
+  - https://github.com/rumeshmadhusanka/druid-exporter
 keywords:
 - kubernetes
 - apache
@@ -21,4 +14,4 @@ keywords:
 - exporter
 - prometheus
 - grafana
-icon: https://github.com/opstree/druid-exporter/blob/master/static/druid-exporter-logo.svg
+icon: https://github.com/rumeshmadhusanka/druid-exporter/blob/master/static/druid-exporter-logo.svg
