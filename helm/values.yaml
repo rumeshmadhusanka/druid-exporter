@@ -2,8 +2,8 @@
 name: druid-exporter
 
 image:
-  name: quay.io/opstree/druid-exporter
-  tag: v0.9
+  name: ghcr.io/rumeshmadhusanka/druid-exporter
+  tag: 0.11.1
   pullPolicy: IfNotPresent
 
 annotations: {}
