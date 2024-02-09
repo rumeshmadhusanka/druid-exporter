@@ -7,17 +7,18 @@ import (
 	"encoding/json"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/alecthomas/kingpin.v2"
-	"io/ioutil"
+	"io"
 	"net/http"
+	"os"
 )
 
 var (
-	user        = kingpin.Flag("druid.user", "HTTP basic auth username, EnvVar - DRUID_USER. (Only if it is set)").Default("").OverrideDefaultFromEnvar("DRUID_USER").String()
-	password    = kingpin.Flag("druid.password", "HTTP basic auth password, EnvVar - DRUID_PASSWORD. (Only if it is set)").Default("").OverrideDefaultFromEnvar("DRUID_PASSWORD").String()
-	insecureTLS = kingpin.Flag("insecure.tls.verify", "Boolean flag to skip TLS verification, EnvVar - INSECURE_TLS_VERIFY.").OverrideDefaultFromEnvar("INSECURE_TLS_VERIFY").Bool()
-	certFile    = kingpin.Flag("tls.cert", "A pem encoded certificate file, EnvVar - CERT_FILE. (Only if tls is configured)").Default("").OverrideDefaultFromEnvar("CERT_FILE").String()
-	keyFile     = kingpin.Flag("tls.key", "A pem encoded key file, EnvVar - CERT_KEY. (Only if tls is configured)").Default("").OverrideDefaultFromEnvar("CERT_KEY").String()
-	caFile      = kingpin.Flag("tls.ca", "A pem encoded CA's certificate file, EnvVar - CA_CERT_FILE. (Only if tls is configured)").Default("").OverrideDefaultFromEnvar("CA_CERT_FILE").String()
+	user        = kingpin.Flag("druid.user", "HTTP basic auth username, EnvVar - DRUID_USER. (Only if it is set)").Default("").Envar("DRUID_USER").String()
+	password    = kingpin.Flag("druid.password", "HTTP basic auth password, EnvVar - DRUID_PASSWORD. (Only if it is set)").Default("").Envar("DRUID_PASSWORD").String()
+	insecureTLS = kingpin.Flag("insecure.tls.verify", "Boolean flag to skip TLS verification, EnvVar - INSECURE_TLS_VERIFY.").Envar("INSECURE_TLS_VERIFY").Bool()
+	certFile    = kingpin.Flag("tls.cert", "A pem encoded certificate file, EnvVar - CERT_FILE. (Only if tls is configured)").Default("").Envar("CERT_FILE").String()
+	keyFile     = kingpin.Flag("tls.key", "A pem encoded key file, EnvVar - CERT_KEY. (Only if tls is configured)").Default("").Envar("CERT_KEY").String()
+	caFile      = kingpin.Flag("tls.ca", "A pem encoded CA's certificate file, EnvVar - CA_CERT_FILE. (Only if tls is configured)").Default("").Envar("CA_CERT_FILE").String()
 )
 
 // GetHealth returns that druid is healthy or not
@@ -84,7 +85,7 @@ func GetResponse(url string, queryType string) ([]byte, error) {
 		logrus.Errorf("Possible issue can be with Druid's URL, Username or Password")
 	}
 
-	return ioutil.ReadAll(resp.Body)
+	return io.ReadAll(resp.Body)
 }
 
 // GetSQLResponse will return API response for a druid query
@@ -129,7 +130,7 @@ func GetSQLResponse(url string, query string) ([]byte, error) {
 		logrus.Errorf("Possible issue can be with Druid's URL, Username or Password")
 	}
 
-	return ioutil.ReadAll(resp.Body)
+	return io.ReadAll(resp.Body)
 }
 
 func generateTLSConfig() (*http.Client, error) {
@@ -141,7 +142,7 @@ func generateTLSConfig() (*http.Client, error) {
 			logrus.Errorf("Unable to load certificate file: %v", err)
 			return nil, err
 		}
-		caCert, err := ioutil.ReadFile(*caFile)
+		caCert, err := os.ReadFile(*caFile)
 		if err != nil {
 			logrus.Errorf("Unable to load CA's certificate file: %v", err)
 			return nil, err
@@ -152,7 +153,7 @@ func generateTLSConfig() (*http.Client, error) {
 			Certificates: []tls.Certificate{cert},
 			RootCAs:      caCertPool,
 		}
-		tlsConfig.BuildNameToCertificate()
+		//tlsConfig.BuildNameToCertificate()
 		transport := &http.Transport{TLSClientConfig: tlsConfig}
 		client := &http.Client{Transport: transport}
 		return client, nil

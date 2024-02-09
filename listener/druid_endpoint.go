@@ -4,7 +4,7 @@ import (
 	"druid-exporter/utils"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -23,7 +23,7 @@ func DruidHTTPEndpoint(metricsCleanupTTL int, disableHistogram bool, histogram *
 		var id string
 		reqHeader, _ := header.ParseValueAndParams(req.Header, "Content-Type")
 		if req.Method == "POST" && reqHeader == "application/json" {
-			output, err := ioutil.ReadAll(req.Body)
+			output, err := io.ReadAll(req.Body)
 			defer req.Body.Close()
 			if err != nil {
 				logrus.Debugf("Unable to read JSON response: %v", err)
