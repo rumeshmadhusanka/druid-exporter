@@ -1,17 +1,4 @@
----
-name: Product Upgrade
-about: Upgrade a product created
-title: "[Product Upgrade]"
-labels: type/product-upgrade
-assignees: ''
+Please go the the `Preview` tab and select the appropriate sub-template:
 
----
-
-### Checklist
-- [ ] Updated release notes 
-- [ ] Updated the Makefile
-- [ ] Updated references to image tags
-- [ ] Compared the previous version's Helm values and new Version's Helm values
-- [ ] Tested on at least one cloud provider
-
-### Any interesting observations during testing the upgrade
+* [Upgrade](?expand=1&template=upgrade.md)
+* [Fresh](?expand=1&template=fresh.md)
